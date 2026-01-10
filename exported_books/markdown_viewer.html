@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Markdown Viewer – Exam Prep 2024–2025</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="print.css">
+  <style>
+    #md-content { max-width: 900px; margin: 2em auto; background: #fff; padding: 2em; border-radius: 8px; box-shadow: 0 2px 12px #0001; }
+    #md-loader { text-align: center; color: #888; margin-top: 3em; }
+    #md-source-link { display: block; text-align: right; margin-bottom: 1em; font-size: 0.95em; }
+  </style>
+</head>
+<body>
+  <nav id="md-source-link">
+    <a href="../exam_prep_complete_2024_2025_with_explanations.md" target="_blank">Download raw Markdown</a>
+  </nav>
+  <div id="md-loader">Loading exam_prep_complete_2024_2025_with_explanations.md…</div>
+  <div id="md-content" style="display:none"></div>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+    // Utility: detect Hebrew in a string
+    function hasHebrew(text) {
+      return /[\u0590-\u05FF]/.test(text);
+    }
+
+    // Walk block elements and set dir="rtl" if Hebrew is detected
+    function applyRTL(root) {
+      const blocks = root.querySelectorAll('p, li, blockquote, td, th, h1, h2, h3, h4, h5, h6');
+      blocks.forEach(el => {
+        if (hasHebrew(el.textContent)) {
+          el.setAttribute('dir', 'rtl');
+          el.style.textAlign = 'right';
+        }
+      });
+    }
+
+    const mdFile = '../exam_prep_complete_2024_2025_with_explanations.md';
+    fetch(mdFile)
+      .then(r => r.ok ? r.text() : Promise.reject(r.statusText))
+      .then(md => {
+        document.getElementById('md-content').innerHTML = marked.parse(md, {gfm: true, breaks: true});
+        applyRTL(document.getElementById('md-content'));
+        document.getElementById('md-loader').style.display = 'none';
+        document.getElementById('md-content').style.display = '';
+      })
+      .catch(e => {
+        document.getElementById('md-loader').textContent = 'Failed to load markdown: ' + e;
+      });
+  </script>
+</body>
+</html>
