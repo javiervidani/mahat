@@ -76,7 +76,7 @@ def extract_all_pdfs():
 
 def build_master_document():
     """Build comprehensive master document with all questions"""
-    base_dir = Path(r"c:\Users\aviel\dev\mahat")
+    base_dir = Path(r"c:\Users\$USERNAME\dev\mahat")
     output_file = base_dir / "exam_prep_complete_2024_2025_with_explanations.md"
     
     exam_2024_dir = base_dir / "exam_files"
